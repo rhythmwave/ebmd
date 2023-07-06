@@ -92,45 +92,140 @@
                             @csrf
                             <div class="row">
                                 
-                                <div class="mb-3 col-md-6">
+                                <div class="col-md-3">
                                     <label> Permohonan Pemindahtanganan BMD </label>
+                                </div>
+                                <div class="col-md-3">
                                     <button type="button" class="btn btn-secondary btn-sm">Download Format</button>
                                 </div>
                                 
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Name</label>
-                                    <input type="text" name="name" class="form-control border border-2 p-2" value='{{ old('name', auth()->user()->name) }}'>
+                                <div class="col-md-5">
+                                    <input name="file" type="file" />
                                     @error('name')
-                                <p class='text-danger inputerror'>{{ $message }} </p>
-                                @enderror
-                                </div>
-                               
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Phone</label>
-                                    <input type="number" name="phone" class="form-control border border-2 p-2" value='{{ old('phone', auth()->user()->phone) }}'>
-                                    @error('phone')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
-                                </div>
-                                
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Location</label>
-                                    <input type="text" name="location" class="form-control border border-2 p-2" value='{{ old('location', auth()->user()->location) }}'>
-                                    @error('location')
-                                    <p class='text-danger inputerror'>{{ $message }} </p>
-                                    @enderror
-                                </div>
-                                
-                                <div class="mb-3 col-md-12">
-                                    <label for="floatingTextarea2">About</label>
-                                    <textarea class="form-control border border-2 p-2"
-                                        placeholder=" Say something about yourself" id="floatingTextarea2" name="about"
-                                        rows="4" cols="50">{{ old('about', auth()->user()->about) }}</textarea>
-                                        @error('about')
-                                        <p class='text-danger inputerror'>{{ $message }} </p>
-                                        @enderror
                                 </div>
                             </div>
+                            <div class="row">
+                                
+                                <div class="col-md-3">
+                                    <label> SK Tim Peneliti Lingkup Perangkat Daerah </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-secondary btn-sm">Download Format</button>
+                                </div>
+                                
+                                <div class="col-md-5">
+                                    <input name="file" type="file" />
+                                    @error('name')
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                
+                                <div class="col-md-3">
+                                    <label> Berita Acara Penelitian Pemindahtanganan </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-secondary btn-sm">Download Format</button>
+                                </div>
+                                
+                                <div class="col-md-5">
+                                    <input name="file" type="file" />
+                                    @error('name')
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                
+                                <div class="col-md-3">
+                                    <label> Surat Pernyataan Kepemilikan BMD </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-secondary btn-sm">Download Format</button>
+                                </div>
+                                
+                                <div class="col-md-5">
+                                    <input name="file" type="file" />
+                                    @error('name')
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label> Lampiran Lain </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <!-- <button type="button" class="btn btn-secondary btn-sm">Download Format</button> -->
+                                </div>
+                                
+                                <div class="col-md-5">
+                                    <input name="file" type="file" />
+                                    @error('name')
+                                    <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="tab-content mt-5">
+                                @foreach($courses as $count => $course)
+                                    <div role="tabpanel" @if($count == 0) class="tab-pane active" @else class="tab-pane" @endif id="tab-{{$course->id}}">
+                                        <div class="col-md-8 col-md-offset-2">
+                                            <div>
+                                                <h2 class="text-center h3">{{ $course->title }}</h2>
+                                                <p>{{ $course->description }}</p>
+                                            </div>
+                                            <table class="table">
+                                                <tr>
+                                                    <th>
+                                                    </th>
+                                                    <th>
+                                                        <a href="{{ url('timetables/sort', ['asc']) }}">
+                                                            <i class="fa fa-sort-asc" aria-hidden="true"></i>
+                                                        </a>
+                                                        Date
+                                                        <a href="{{ url('timetables/sort', ['desc']) }}">
+                                                            <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                                                        </a>
+                                                    </th>
+                                                    <th>
+                                                        {{ $course->startTime() }} to {{ $course->endTime() }} -
+                                                        @if(Auth::user()->role === 'Admin')
+                                                            <a href="/courses/{{ $course->id }}/edit">Update</a>
+                                                        @endif
+                                                    </th>
+                                                    <th>Notes / Announcements:</th>
+                                                </tr>
+
+                                                @foreach($course->seminars as $table)
+                                                <tr>
+                                                    @if(Auth::user()->role === 'Admin')
+                                                        @if($table->isDateEnabled)
+                                                            <td><a href="/seminars/{{ $table->id }}/edit">Edit</a> </td>
+                                                        @else
+
+                                                        @endif
+                                                    @endif
+                                                    <th>
+                                                        @if($table->isDateEnabled)
+                                                            {{ $table->startDate() }}
+                                                        @else
+                                                            <td><a href="/seminars/{{ $table->id }}/edit">Add date</a> </td>
+                                                        @endif
+                                                    </th>
+                                                    <td>{{ $table->title }}</td>
+                                                    <td><i>{{ $table->note }}</i></td>
+                                                </tr>
+                                                @endforeach
+                                            </table>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
                             <button type="submit" class="btn bg-gradient-dark">Submit</button>
                         </form>
 
