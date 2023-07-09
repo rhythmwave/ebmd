@@ -23,6 +23,14 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('assets') }}/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+    <style>
+        .bg-gradient-primary {
+            background-image: linear-gradient(195deg, #336855 0%, #336865 100%) !important;
+        }
+        .shadow-primary {
+            box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(151, 244, 170, 0.4) !important;
+        }
+    </style>
 </head>
 <body class="{{ $bodyClass }}">
 
@@ -30,8 +38,11 @@
 
 <script src="{{ asset('assets') }}/js/core/popper.min.js"></script>
 <script src="{{ asset('assets') }}/js/core/bootstrap.min.js"></script>
+<script src="{{ asset('assets') }}/js/core/jquery.min.js"></script>
 <script src="{{ asset('assets') }}/js/plugins/perfect-scrollbar.min.js"></script>
 <script src="{{ asset('assets') }}/js/plugins/smooth-scrollbar.min.js"></script>
+<script src="{{ asset('assets') }}/js/flatpickr.min.js"></script>
+
 @stack('js')
 <script>
     var win = navigator.platform.indexOf('Win') > -1;

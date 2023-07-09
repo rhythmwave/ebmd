@@ -1,12 +1,4 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
-<style>
-        .bg-gradient-primary {
-            background-image: linear-gradient(195deg, #336855 0%, #336865 100%);
-        }
-        .shadow-primary {
-            box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(151, 244, 170, 0.4) !important;
-        }
-        </style>
         <x-navbars.sidebar activePage="tables"></x-navbars.sidebar>
         <!--  -->
         <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
@@ -23,7 +15,7 @@
                                 </div>
                             </div>
                             <div class=" me-3 my-3 text-end">
-                                <a class="btn bg-gradient-dark mb-0" href="javascript:;"><i
+                                <a id="new" class="btn bg-gradient-dark mb-0" href="javascript:;"><i
                                         class="material-icons text-sm">add</i>&nbsp;&nbsp;Buat Permohonan</a>
                             </div>
                             <div class="card-body px-0 pb-2">
@@ -75,9 +67,9 @@
                                                 </td>
                                                 <td class="align-middle">
                                                     <a href="javascript:;"
-                                                        class="text-secondary font-weight-bold text-xs"
+                                                        class="btn text-secondary font-weight-bold text-xs"
                                                         data-toggle="tooltip" data-original-title="Edit user">
-                                                        Details
+                                                        <span class="badge badge-sm bg-gradient-info">Details</span>
                                                     </a>
                                                 </td>
                                             </tr>
@@ -96,16 +88,128 @@
                                                     <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="badge badge-sm bg-gradient-secondary">Dokumen Tidak Sesuai</span>
+                                                    <span class="badge badge-sm bg-gradient-danger">Dokumen Tidak Sesuai</span>
                                                 </td>
                                                 <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                                                 </td>
                                                 <td class="align-middle">
                                                     <a href="javascript:;"
-                                                        class="text-secondary font-weight-bold text-xs"
+                                                        class="btn text-secondary font-weight-bold text-xs"
                                                         data-toggle="tooltip" data-original-title="Edit user">
-                                                        Details
+                                                        <span class="badge badge-sm bg-gradient-info">Details</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-left text-left text-sm">
+                                                    <p class="text-xs font-weight-bold mb-0">TX-00.0120123/123</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">000.2.8392./Bid/BMD</p>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <span class="text-secondary text-xs font-weight-bold">Hibah</span>
+                                                </td>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <span class="text-secondary text-xs font-weight-bold">23/04/19</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <span class="badge badge-sm bg-gradient-warning">Belum Upload Dokumen</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">23/04/20</span>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <a href="javascript:;"
+                                                        class="btn text-secondary font-weight-bold text-xs"
+                                                        data-toggle="tooltip" data-original-title="Edit user">
+                                                        <span class="badge badge-sm bg-gradient-info">Details</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-left text-left text-sm">
+                                                    <p class="text-xs font-weight-bold mb-0">TX-00.0120123/123</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">000.2.8392./Bid/BMD</p>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <span class="text-secondary text-xs font-weight-bold">Hibah</span>
+                                                </td>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <span class="text-secondary text-xs font-weight-bold">23/04/19</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <span class="badge badge-sm bg-gradient-secondary">Verifikasi Internal SKPD</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">23/04/20</span>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <a href="javascript:;"
+                                                        class="btn text-secondary font-weight-bold text-xs"
+                                                        data-toggle="tooltip" data-original-title="Edit user">
+                                                        <span class="badge badge-sm bg-gradient-info">Details</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-left text-left text-sm">
+                                                    <p class="text-xs font-weight-bold mb-0">TX-00.0120123/123</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">000.2.8392./Bid/BMD</p>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <span class="text-secondary text-xs font-weight-bold">Lelang</span>
+                                                </td>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <span class="text-secondary text-xs font-weight-bold">23/04/19</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <span class="badge badge-sm bg-gradient-secondary">Verifikasi Penatausahaan BMD</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">23/04/20</span>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <a href="javascript:;"
+                                                        class="btn text-secondary font-weight-bold text-xs"
+                                                        data-toggle="tooltip" data-original-title="Edit user">
+                                                        <span class="badge badge-sm bg-gradient-info">Details</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-left text-left text-sm">
+                                                    <p class="text-xs font-weight-bold mb-0">TX-00.0120123/123</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">000.2.8392./Bid/BMD</p>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <span class="text-secondary text-xs font-weight-bold">Hibab</span>
+                                                </td>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <span class="text-secondary text-xs font-weight-bold">23/04/19</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <span class="badge badge-sm bg-gradient-secondary">Proses Penghapusan</span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">23/04/20</span>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <a href="javascript:;"
+                                                        class="btn text-secondary font-weight-bold text-xs"
+                                                        data-toggle="tooltip" data-original-title="Edit user">
+                                                        <span class="badge badge-sm bg-gradient-info">Details</span>
                                                     </a>
                                                 </td>
                                             </tr>
