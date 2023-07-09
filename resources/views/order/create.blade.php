@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 
-                <form method='POST' action='{{ route('order.store') }}'>
+                <form method='POST' action='{{ route('order.store') }}' enctype="multipart/form-data">
                     <div class="row gx-4 mb-2">
                         <div class="col-md-4 align-items-center">
                             <label class="form-label">Nomor Surat</label>
@@ -108,7 +108,7 @@
                                 </div>
                                 
                                 <div class="col-md-5">
-                                    <input name="file" type="file" />
+                                    <input name="detailtype_1" type="file" />
                                     @error('name')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -124,7 +124,7 @@
                                 </div>
                                 
                                 <div class="col-md-5">
-                                    <input name="file" type="file" />
+                                    <input name="detailtype_2" type="file" />
                                     @error('name')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -140,7 +140,7 @@
                                 </div>
                                 
                                 <div class="col-md-5">
-                                    <input name="file" type="file" />
+                                    <input name="detailtype_3" type="file" />
                                     @error('name')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -156,7 +156,7 @@
                                 </div>
                                 
                                 <div class="col-md-5">
-                                    <input name="file" type="file" />
+                                    <input name="detailtype_4" type="file" />
                                     @error('name')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -171,7 +171,7 @@
                                 </div>
                                 
                                 <div class="col-md-5">
-                                    <input name="file" type="file" />
+                                    <input name="detailtype_5" type="file" />
                                     @error('name')
                                     <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -236,9 +236,7 @@
                     </div>
                 </div>
             </div>
-            @push('scripts')
-                {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
-            @endpush
+            {{ $dataTable->scripts() }}
         </div>
         <x-footers.auth></x-footers.auth>
     </div>
@@ -256,18 +254,6 @@
             alert(target);
         });
 
-        var table = $('#kibb-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('order.datakibb') }}",
-            columns: [
-                {data: 'IDPemda', name: 'id'},
-                {data: 'Nm_Aset5', name: 'title'},
-                {data: 'Tgl_Perolehan', name: 'description'},
-                {data: 'Kondisi', name: 'content'},
-                {data: 'Tgl_Perolehan', name: 'content'},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
-            ]
-        });
+        $('#kib-b table').find('input[type=checkbox]:checked');
     });
 </script>

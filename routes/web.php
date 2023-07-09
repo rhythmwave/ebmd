@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/orders', 'index')->name('order');
         Route::get('/orders/create', 'create')->name('order.create');
         Route::post('/orders/store', 'store')->name('order.store');
+        Route::post('/orders/upload-doc', 'storeDocument')->name('order.upload.doc');
         Route::get('/orders/list', 'data')->name('order.data');
         Route::get('/orders/data-kibb', 'dataKibb')->name('order.datakibb');
     });

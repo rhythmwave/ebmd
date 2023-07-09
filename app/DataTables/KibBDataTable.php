@@ -40,9 +40,10 @@ class KibBDataTable extends DataTable
         return $this->builder()
                     ->setTableId('kibb-table')
                     ->columns($this->getColumns())
-                    ->minifiedAjax()
+                    // ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    // ->orderBy(1)
+                    ->ajax(route('order.datakibb'))
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -60,16 +61,13 @@ class KibBDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('IDPemda'),
-            Column::make('Nm_Aset5'),
-            Column::make('Tgl_Perolehan'),
-            Column::make('Kondisi'),
-            Column::make('Tgl_Perolehan'),
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+            Column::make('')->data('selection')->orderable(false),
+            Column::make('Kode Barang')->data('Kd_Barang')->orderable(false),
+            Column::make('Nama Aset')->data('Nm_Aset5')->orderable(false),
+            Column::make('Tgl Perolehan')->data('Tgl_Perolehan')->orderable(false),
+            Column::make('Kondisi')->data('Kondisi')->orderable(false),
+            Column::make('Last Update')->data('Tgl_Perolehan')->orderable(false),
+            Column::computed('Action')->data('action')->orderable(false),
         ];
     }
 

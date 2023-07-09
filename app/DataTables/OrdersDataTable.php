@@ -61,13 +61,13 @@ class OrdersDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id')->name('Nomor Ticket')->orderable(false),
-            Column::make('code')->name('Nomor Surat')->orderable(false),
-            Column::make('order_type_id')->name('Jenis')->orderable(false),
-            Column::make('created_at')->name('Tanggal Permohonan')->orderable(false),
-            Column::make('order_status_id')->name('Status Permohonan')->orderable(false),
-            Column::make('updated_at')->name('Last Update')->orderable(false),
-            // Column::make('Action'),
+            Column::make('Nomor Ticket')->data('id')->orderable(false),
+            Column::make('Nomor Surat')->data('code')->orderable(false),
+            Column::make('Jenis')->data('type_name')->orderable(false),
+            Column::make('Tanggal Permohonan')->data('created_at')->orderable(false),
+            Column::make('Status Permohonan')->data('status_name')->orderable(false),
+            Column::make('Last Update')->data('updated_at')->orderable(false),
+            Column::make('Action')->data('action'),
         ];
     }
 

@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\DB;
 use App\DataTables\KibBDataTable;
 use App\Models\KibB;
 use App\Models\Order;
+use App\Models\OrderDetails;
 use Yajra\DataTables\Facades\Datatables;
 use Illuminate\Support\Facades\Auth;
 use App\DataTables\OrdersDataTable;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
@@ -41,23 +43,70 @@ class OrderController extends Controller
         $order->applicant = $user->username;
         $order->order_status_id  = 1;
         $order->order_type_id = $request->jenis;
-        $order->save();
+        if ($order->save()){
+            
+            for($i=1;$i<=5;$i++){
+                
+                if ( $request->file('detailtype_'.$i) != NULL ){
+                    $name=$request->file('detailtype_'.$i)->getClientOriginalName();
+                    $extension=explode('.',$name);
+                    $fileName = bin2hex(random_bytes(16)).'.'.$extension[count($extension)-1];
+                    $request->file('detailtype_'.$i)->storeAs('order', $fileName);
+                    $orderDetail = new OrderDetails;
+                    $orderDetail->order_id = $order->id;
+                    $orderDetail->attachment = 'order/'.$fileName;
+                    $orderDetail->order_detail_type_id = $i;
+                    $orderDetail->description = 'Dokumen '.$name;
+                    $orderDetail->save();
+                }
+            }
+
+        }
         return redirect()->route('order')->with('Success','Order Inserted!');
+    }
+
+    public function storeDocument(Request $request)
+    {
+        // $request->validate([
+        //     'detail_type_1' => 'required|mimes:pdf,xlx,csv,doc,xlsx|max:2048',
+        // ]);        
+        var_dump(count($request->file()));die();
+        
+
+        return back()
+
+                    ->with('success', 'You have successfully upload image.')
+
+                    ->with('image', $imageName); 
     }
 
     public function dataKibb(Request $request)
     {
-        if ($request->ajax()) {
-            $data = KibB::select('*');
+        $user = Auth::user();
+        // if ($request->ajax()) {
+            $data = KibB::select([
+                    'id',
+                    'Nm_Aset5',
+                    'Tgl_Perolehan',
+                     DB::raw('CONCAT(Kd_Bidang,Kd_Unit,Kd_Sub,Kd_UPB,".",Kd_Aset8,Kd_Aset80,Kd_Aset81,Kd_Aset82,Kd_Aset83,Kd_Aset84,Kd_Aset85) as Kd_Barang'),
+                    'Kondisi'
+                ])->where('Nm_UPB', '=', $user->region);
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                    $actionBtn = '<div class="input-group input-group-static mb-4">
+                    <label>Upload Photo</label>
+                    <input type="hidden" name="upload-kibb" class="form-control hidden" >
+                    </div>';
                     return $actionBtn;
                 })
-                ->rawColumns(['action'])
+                ->addColumn('selection', function($row){
+                    $actionBtn = '<input type="checkbox" id="kibb'.$row->id.'" name="kibb'.$row->id.'" value="Boat">';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action','selection'])
                 ->make(true);
-        }
+        // }
 
         return view('welcome');
     }
@@ -65,11 +114,17 @@ class OrderController extends Controller
     public function data(Request $request)
     {
         // if ($request->ajax()) {
-            $data = Order::select('*');
+            
+            $eloOrder = Order::join('order_status','orders.order_status_id','=','order_status.id')
+                        ->join('order_type','orders.order_type_id','=','order_type.id')
+                        ->get(['orders.*','order_status.name as status_name','order_type.name as type_name']); 
+            $data = $eloOrder;
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                    $actionBtn = '<a href="javascript:;" class="btn text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Detail Order">
+                    <span class="badge badge-sm bg-gradient-info">Detail</span>
+                </a>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])

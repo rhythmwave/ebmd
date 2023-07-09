@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class OrderDetails extends Model
 {
     use HasFactory;
 
-    protected $table = 'orders';
+    protected $table = 'order_details';
 
     protected $fillable = [
         'id',
+        'order_id',
+        'order_detail_type_id',
+        'attachment',
         'code',
-        'applicant',
-        'identity',
-        'order_status_id',
-        'order_type_id',
-        'description',
+        'desccription',
+        'condition',
         'xs1',
         'xn1',
         'xd1',
@@ -27,9 +27,6 @@ class Order extends Model
     ];
 
     protected $casts = [
-        // 'created_at' => 'date',
-        // 'updated_at' => 'date',
+        // 'created_at' => 'timestamp',
     ];
-
-
 }
