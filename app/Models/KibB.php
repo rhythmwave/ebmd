@@ -12,6 +12,8 @@ class KibB extends Model
      *
      * @var string[]
      */
+    protected $table = 'kib_b';
+
     protected $fillable = [
         'IDPemda',
         'Tahun',

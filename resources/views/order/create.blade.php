@@ -1,5 +1,5 @@
 <script src="{{ asset('assets') }}/js/dropzone-min.js"></script>
-<script src="{{ asset('assets') }}/js/datatables.js"></script>
+<!-- <script src="{{ asset('assets') }}/js/datatables.js"></script> -->
 <link href="{{ asset('assets') }}/css/dropzone.css" rel="stylesheet" type="text/css" />
 <x-layout bodyClass="g-sidenav-show bg-gray-200">
     <x-navbars.sidebar activePage="tables"></x-navbars.sidebar>
@@ -45,19 +45,24 @@
                     </div>
                 </div>
                 
-                <form method='POST' action='{{ route('verify') }}'>
+                <form method='POST' action='{{ route('order.store') }}'>
                     <div class="row gx-4 mb-2">
                         <div class="col-md-4 align-items-center">
                             <label class="form-label">Nomor Surat</label>
-                            <input type="text" name="no-surat" class="form-control border border-2 p-2" value=''>
+                            <input type="text" name="nosurat" class="form-control border border-2 p-2" value=''>
                         </div>
                         <div class="col-md-4 align-items-center">
                             <label class="form-label">Jenis</label>
-                            <input type="text" name="jenis" class="form-control border border-2 p-2" value=''>
+                            <select name="jenis" class="form-control border border-2 p-2">
+                                <option  value="" disabled selected>Pilih Jenis Permohonan</option>
+                                @foreach ($listJenis as $jenis)
+                                <option value="{{ $jenis->id }}">{{ $jenis->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="col-md-4 align-items-center">
                             <label class="form-label">Tanggal</label>
-                            <input type="text" name="tanggal" class="form-control border border-2 p-2 datepicker" placeholder="Please select date"  value=''>
+                            <input id="tgl-select" type="text" name="tanggal" class="form-control border border-2 p-2 datepicker" placeholder="Please select date"  value=''>
                         </div>
                     </div>
                     <div class="card card-plain h-100">
@@ -185,19 +190,19 @@
                         <div class="card-body p-3">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a href="#home" class="nav-link" data-bs-toggle="tab">KIB A</a>
+                                    <a href="#kib-a" class="nav-link" data-bs-toggle="tab">KIB A</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#profile" class="nav-link active" data-bs-toggle="tab">KIB B</a>
+                                    <a href="#kib-b" class="nav-link active" data-bs-toggle="tab">KIB B</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#messages" class="nav-link" data-bs-toggle="tab">KIB C</a>
+                                    <a href="#kib-c" class="nav-link" data-bs-toggle="tab">KIB C</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#messages" class="nav-link" data-bs-toggle="tab">KIB D</a>
+                                    <a href="#kib-d" class="nav-link" data-bs-toggle="tab">KIB D</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#messages" class="nav-link" data-bs-toggle="tab">KIB E</a>
+                                    <a href="#kib-e" class="nav-link" data-bs-toggle="tab">KIB E</a>
                                 </li>
                             </ul>
                             <div class="tab-content">
@@ -205,20 +210,9 @@
                                     <p>Home tab content ...</p>
                                 </div>
                                 <div class="tab-pane fade show active" id="kib-b">
-                                    <table class="table table-bordered data-table" id="datatable-kibb">
-                                        <thead>
-                                            <tr>
-                                                <th>Kode Barang</th>
-                                                <th>Nama Aset</th>
-                                                <th>Tgl Perolehan</th>
-                                                <th>Kondisi</th>
-                                                <th>Last Update</th>
-                                                <th width="100px">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
+
+                                    {{ $dataTable->table() }}
+                                    <table id='test-table'></table>
                                 </div>
                                 <div class="tab-pane fade" id="kib-c">
                                     <p>Messages tab content ...</p>
@@ -242,7 +236,9 @@
                     </div>
                 </div>
             </div>
-
+            @push('scripts')
+                {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+            @endpush
         </div>
         <x-footers.auth></x-footers.auth>
     </div>
@@ -253,16 +249,23 @@
 <script type="text/javascript">
     $(function () {
 
-        var table = $('#datatable-kibb').DataTable({
+        $('#tgl-select').flatpickr();
+        
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            var target = $(e.target).attr("href") // activated tab
+            alert(target);
+        });
+
+        var table = $('#kibb-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('kibb.list') }}",
+            ajax: "{{ route('order.datakibb') }}",
             columns: [
                 {data: 'IDPemda', name: 'id'},
-                {data: 'Nm_Aset5', name: 'name'},
-                {data: 'Tgl_Perolehan', name: 'name'},
-                {data: 'Kondisi', name: 'email'},
-                {data: 'Tgl_Perolehan', name: 'email'},
+                {data: 'Nm_Aset5', name: 'title'},
+                {data: 'Tgl_Perolehan', name: 'description'},
+                {data: 'Kondisi', name: 'content'},
+                {data: 'Tgl_Perolehan', name: 'content'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
