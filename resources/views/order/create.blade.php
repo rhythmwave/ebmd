@@ -245,7 +245,7 @@
 </x-layout>
 
 <script type="text/javascript">
-    $(function () {
+    $( document ).ready(function() {
 
         $('#tgl-select').flatpickr();
         
@@ -254,11 +254,14 @@
             alert(target);
         });
         
-        $('#kibb-table').find('tbody input[type=checkbox]').click(function(e) {
+        $('#kibb-table').find('tbody').on('click','tr input[type=checkbox]',function(e) {
             // Get the current row
-            if ($(this).is(':checked')) {
-                alert('checked');
-            }
+            var row = $(this).closest('tr').find('td:eq(6)');
+                if ($(this).is(':checked')){
+                    $(row).find('input').attr('type','file');
+                }else{
+                    $(row).find('input').attr('type','hidden');
+                }
         });
     });
 </script>
