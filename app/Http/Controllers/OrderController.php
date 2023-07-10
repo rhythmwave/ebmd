@@ -36,7 +36,6 @@ class OrderController extends Controller
         ]);
 
         $user = Auth::user();
-
         $order = new Order;
         $order->code = $request->nosurat;
         $order->identity = $user->id;
@@ -51,14 +50,28 @@ class OrderController extends Controller
                     $name=$request->file('detailtype_'.$i)->getClientOriginalName();
                     $extension=explode('.',$name);
                     $fileName = bin2hex(random_bytes(16)).'.'.$extension[count($extension)-1];
-                    $request->file('detailtype_'.$i)->storeAs('order', $fileName);
+                    $request->file('detailtype_'.$i)->storeAs('order/'.date("Ymd"), $fileName);
                     $orderDetail = new OrderDetails;
                     $orderDetail->order_id = $order->id;
-                    $orderDetail->attachment = 'order/'.$fileName;
+                    $orderDetail->attachment = 'order/'.date("Ymd").'/'.$fileName;
                     $orderDetail->order_detail_type_id = $i;
-                    $orderDetail->description = 'Dokumen '.$name;
+                    $orderDetail->xs1 = $name;
                     $orderDetail->save();
                 }
+            }            
+
+            foreach($request->kibb as $key => $val){
+                $oriName=$request->upload_kibb[$key]['image']->getClientOriginalName();
+                $extension=explode('.',$oriName);
+                $fileName = bin2hex(random_bytes(16)).'.'.$extension[count($extension)-1];
+                $request->upload_kibb[$key]['image']->storeAs('order/'.date("Ymd"), $fileName);
+                $orderDetail = new OrderDetails;
+                $orderDetail->order_id = $order->id;
+                $orderDetail->attachment = 'order/'.date("Ymd").'/'.$fileName;
+                $orderDetail->order_detail_type_id = $request->detail_type[$key];
+                $orderDetail->xs1 = $oriName;
+                $orderDetail->xn1 = $key;
+                $orderDetail->save();
             }
 
         }
@@ -96,12 +109,13 @@ class OrderController extends Controller
                 ->addColumn('action', function($row){
                     $actionBtn = '<div class="input-group input-group-static mb-4">
                     <label>Upload Photo</label>
-                    <input type="hidden" name="upload-kibb" class="form-control hidden" >
+                    <input type="hidden" name="upload_kibb['.$row->id.'][image]" class="form-control hidden" >
                     </div>';
                     return $actionBtn;
                 })
                 ->addColumn('selection', function($row){
-                    $actionBtn = '<input type="checkbox" id="kibb'.$row->id.'" name="kibb'.$row->id.'" value="Boat">';
+                    $actionBtn = '<input type="hidden" name="detail_type['.$row->id.']" class="form-control hidden" value="7" >
+                    <input type="checkbox" id="kibb_'.$row->id.'" name="kibb['.$row->id.'][code]" value="'.$row->Kd_Barang.'">';
                     return $actionBtn;
                 })
                 ->rawColumns(['action','selection'])
