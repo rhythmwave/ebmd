@@ -253,7 +253,12 @@
             var target = $(e.target).attr("href") // activated tab
             alert(target);
         });
-
-        $('#kib-b table').find('input[type=checkbox]:checked');
+        
+        $('#kibb-table').find('tbody input[type=checkbox]').click(function(e) {
+            // Get the current row
+            if ($(this).is(':checked')) {
+                alert('checked');
+            }
+        });
     });
 </script>
