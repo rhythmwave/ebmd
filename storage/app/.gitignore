@@ -2,3 +2,4 @@
 !public/
 !data/
 !.gitignore
+!public/template/*

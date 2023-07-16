@@ -52,7 +52,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/orders/store', 'store')->name('order.store');
         Route::post('/orders/upload-doc', 'storeDocument')->name('order.upload.doc');
         Route::get('/orders/list', 'data')->name('order.data');
+        Route::get('/orders/data-kiba', 'dataKiba')->name('order.datakiba');
         Route::get('/orders/data-kibb', 'dataKibb')->name('order.datakibb');
+        Route::get('/orders/data-kibc', 'dataKibc')->name('order.datakibc');
+        Route::get('/orders/data-kibd', 'dataKibd')->name('order.datakibd');
+        Route::get('/orders/data-kibe', 'dataKibe')->name('order.datakibe');
     });
 	Route::get('user-management', function () {
 		return view('pages.laravel-examples.user-management');

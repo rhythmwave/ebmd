@@ -19,6 +19,7 @@ class KibBDataTable extends DataTable
      *
      * @param QueryBuilder $query Results from query() method.
      */
+    protected string $dataTableVariable = 'dataTableKIBB';
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query));
@@ -42,6 +43,7 @@ class KibBDataTable extends DataTable
                     ->columns($this->getColumns())
                     // ->minifiedAjax()
                     //->dom('Bfrtip')
+                    ->dom('tip')
                     // ->orderBy(1)
                     ->ajax(route('order.datakibb'))
                     ->selectStyleSingle()
