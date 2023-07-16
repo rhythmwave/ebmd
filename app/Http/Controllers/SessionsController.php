@@ -31,7 +31,7 @@ class SessionsController extends Controller
         }
 
         session()->regenerate();
-
+        session()->put('user', User::all());
         return redirect('/dashboard');
 
     }

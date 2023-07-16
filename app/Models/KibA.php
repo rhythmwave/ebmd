@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class KibB extends Model
+class KibA extends Model
 {
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
-    protected $table = 'kib_b';
+    protected $table = 'kib_a';
 
     protected $fillable = [
         'IDPemda',

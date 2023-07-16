@@ -42,32 +42,22 @@ Route::post('sign-out', [SessionsController::class, 'destroy'])->middleware('aut
 Route::get('profile', [ProfileController::class, 'create'])->middleware('auth')->name('profile');
 Route::post('user-profile', [ProfileController::class, 'update'])->middleware('auth');
 Route::group(['middleware' => 'auth'], function () {
-	Route::get('billing', function () {
-		return view('pages.billing');
-	})->name('billing');
-	Route::get('tables', function () {
-		return view('pages.tables');
-	})->name('tables');
+	// Route::get('tables', function () {
+	// 	return view('pages.tables');
+	// })->name('tables');
     Route::controller(OrderController::class)->group(function () {
         // Route::get('/orders/{id}', 'show');
-        Route::get('/orders', 'create');
-        Route::post('/orders/store', 'store');
+        Route::get('/orders', 'index')->name('order');
+        Route::get('/orders/create', 'create')->name('order.create');
+        Route::post('/orders/store', 'store')->name('order.store');
+        Route::post('/orders/upload-doc', 'storeDocument')->name('order.upload.doc');
+        Route::get('/orders/list', 'data')->name('order.data');
+        Route::get('/orders/data-kiba', 'dataKiba')->name('order.datakiba');
+        Route::get('/orders/data-kibb', 'dataKibb')->name('order.datakibb');
+        Route::get('/orders/data-kibc', 'dataKibc')->name('order.datakibc');
+        Route::get('/orders/data-kibd', 'dataKibd')->name('order.datakibd');
+        Route::get('/orders/data-kibe', 'dataKibe')->name('order.datakibe');
     });
-	Route::get('rtl', function () {
-		return view('pages.rtl');
-	})->name('rtl');
-	Route::get('virtual-reality', function () {
-		return view('pages.virtual-reality');
-	})->name('virtual-reality');
-	Route::get('notifications', function () {
-		return view('pages.notifications');
-	})->name('notifications');
-	Route::get('static-sign-in', function () {
-		return view('pages.static-sign-in');
-	})->name('static-sign-in');
-	Route::get('static-sign-up', function () {
-		return view('pages.static-sign-up');
-	})->name('static-sign-up');
 	Route::get('user-management', function () {
 		return view('pages.laravel-examples.user-management');
 	})->name('user-management');
