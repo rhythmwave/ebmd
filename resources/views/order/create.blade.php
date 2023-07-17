@@ -18,6 +18,7 @@
         border-color: #336855 !important;
     }
 </style>
+
 <x-layout bodyClass="g-sidenav-show bg-gray-200">
     <x-navbars.sidebar activePage="tables"></x-navbars.sidebar>
     <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
@@ -62,15 +63,15 @@
                     </div>
                 </div>
                 
-                <form method='POST' action='{{ route('order.store') }}' enctype="multipart/form-data">
+                <form method='POST' action="{{ route('order.store') }}" enctype="multipart/form-data">
                     <div class="row gx-4 mb-2">
                         <div class="col-md-2 align-items-center">
                             <label class="form-label">Nomor Surat</label>
-                            <input type="text" name="nosurat" class="form-control border border-2 p-2" value=''>
+                            <input type="text" name="nosurat" class="form-control border border-2 p-2" value="{{ $dataOrder['order']->code }}">
                         </div>
                         <div class="col-md-2 align-items-center">
                             <label class="form-label">Jenis</label>
-                            <select name="jenis" class="form-control border border-2 p-2">
+                            <select id="detail-type" name="jenis" class="form-control border border-2 p-2">
                                 <option  value="" disabled selected>Pilih Jenis Permohonan</option>
                                 @foreach ($listJenis as $jenis)
                                 <option value="{{ $jenis->id }}">{{ $jenis->name }}</option>
@@ -79,7 +80,7 @@
                         </div>
                         <div class="col-md-2 align-items-center">
                             <label class="form-label">Tanggal</label>
-                            <input id="tgl-select" type="text" name="tanggal" class="form-control border border-2 p-2 datepicker" placeholder="Please select date"  value=''>
+                            <input id="tgl-select" type="text" name="tanggal" class="form-control border border-2 p-2 datepicker" placeholder="Please select date"  value="{{ $dataOrder['order']->created_at }}">
                         </div>
                         <div class="col-md-2 align-items-center">
                             <label class="form-label">Nama Pengusul</label>
@@ -305,6 +306,9 @@
 
 <script type="text/javascript">
     $( document ).ready(function() {
+
+        //select
+        $('#detail-type').val("{{ $dataOrder['order']->order_type_id }}").change();
 
         //date
         $('#tgl-select').flatpickr();

@@ -31,8 +31,10 @@ class OrderController extends Controller
         return $dataTable->render('order.index');
     }
 
-    public function create()
-    {
+
+    public function create(Request $request)
+    {        
+        $user = Auth::user();
         $orderType = DB::table('order_type')->get();
         $dataTableKibB = new KibBDataTable();
         $dataTableKibA = new KibADataTable();
@@ -43,7 +45,15 @@ class OrderController extends Controller
         $kibcTable = $dataTableKibC->html();
         $kibdTable = $dataTableKibD->html();
         $kibeTable = $dataTableKibE->html();
+        
+        $data=[];
 
+        if (isset($request->id)){
+            $data_order = Order::where('id','=',$request->id);
+            
+            $data['order']=$data_order->first();
+
+        }
         return $dataTableKibB->render(
             'order.create', 
             [   'listJenis' => $orderType,
@@ -51,6 +61,8 @@ class OrderController extends Controller
                 'kibcTable'=>$kibcTable,
                 'kibdTable'=>$kibdTable,
                 'kibeTable'=>$kibeTable,
+                'dataOrder'=>$data
+
             ]
         );
     }
