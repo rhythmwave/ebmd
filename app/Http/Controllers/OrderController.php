@@ -189,7 +189,7 @@ class OrderController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $actionBtn = '<a href="javascript:;" class="btn text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Detail Order">
+                    $actionBtn = '<a href="'.route('order.create', ['id' => $row->id]).'" class="btn text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Detail Order">
                     <span class="btn bg-gradient-info">Detail</span>
                 </a>';
                     return $actionBtn;
