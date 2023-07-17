@@ -67,7 +67,7 @@
                     <div class="row gx-4 mb-2">
                         <div class="col-md-2 align-items-center">
                             <label class="form-label">Nomor Surat</label>
-                            <input type="text" name="nosurat" class="form-control border border-2 p-2" value="{{ $dataOrder['order']->code }}">
+                            <input type="text" name="nosurat" class="form-control border border-2 p-2" value="{{ @$dataOrder['order']->code }}">
                         </div>
                         <div class="col-md-2 align-items-center">
                             <label class="form-label">Jenis</label>
@@ -80,7 +80,7 @@
                         </div>
                         <div class="col-md-2 align-items-center">
                             <label class="form-label">Tanggal</label>
-                            <input id="tgl-select" type="text" name="tanggal" class="form-control border border-2 p-2 datepicker" placeholder="Please select date"  value="{{ $dataOrder['order']->created_at }}">
+                            <input id="tgl-select" type="text" name="tanggal" class="form-control border border-2 p-2 datepicker" placeholder="Please select date"  value="{{ @$dataOrder['order']->created_at }}">
                         </div>
                         <div class="col-md-2 align-items-center">
                             <label class="form-label">Nama Pengusul</label>
@@ -308,7 +308,7 @@
     $( document ).ready(function() {
 
         //select
-        $('#detail-type').val("{{ $dataOrder['order']->order_type_id }}").change();
+        $('#detail-type').val("{{ @$dataOrder['order']->order_type_id }}").change();
 
         //date
         $('#tgl-select').flatpickr();
